@@ -1,0 +1,26 @@
+.landing-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1e1e2f 0%, #2d2d44 100%);
+  padding: 2rem;
+}
+
+.landing-page__content {
+  text-align: center;
+  color: #ffffff;
+}
+
+.landing-page__title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+}
+
+.landing-page__subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}

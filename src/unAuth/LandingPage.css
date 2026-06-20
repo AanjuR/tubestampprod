@@ -1,26 +1,89 @@
 .landing-page {
   min-height: 100vh;
+  width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  gap: 0.5rem;
   background: linear-gradient(135deg, #1e1e2f 0%, #2d2d44 100%);
-  padding: 2rem;
+  box-sizing: border-box;
 }
 
 .landing-page__content {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   color: #ffffff;
+  padding: 1.5rem 2rem;
 }
 
 .landing-page__title {
-  font-size: 3rem;
+  font-size: 1.9rem;
   font-weight: 700;
-  margin: 0 0 1rem;
+  margin: 0 0 0.75rem;
+  white-space: nowrap;
   letter-spacing: -0.02em;
+  color: #ffffff;
 }
 
 .landing-page__subtitle {
   font-size: 1.25rem;
   color: rgba(255, 255, 255, 0.7);
+  max-width: 640px;
   margin: 0;
+}
+
+/* Small laptops */
+@media (max-width: 1100px) {
+  .landing-page__title {
+    font-size: 1.6rem;
+  }
+}
+
+/* Tablets / iPad (landscape & portrait) */
+@media (max-width: 1024px) {
+  .landing-page__content {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .landing-page__subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 820px) {
+  .landing-page__title {
+    font-size: 1.4rem;
+  }
+}
+
+/* Phones: allow the long title to wrap instead of overflowing */
+@media (max-width: 680px) {
+  .landing-page__content {
+    padding: 1rem 1.25rem;
+  }
+
+  .landing-page__title {
+    font-size: 1.45rem;
+    white-space: normal;
+    line-height: 1.25;
+    max-width: 22ch;
+  }
+
+  .landing-page__subtitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .landing-page__title {
+    font-size: 1.25rem;
+  }
+
+  .landing-page__subtitle {
+    font-size: 0.95rem;
+  }
 }

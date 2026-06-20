@@ -1,0 +1,128 @@
+.timestamp {
+  display: flex;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+}
+
+.timestamp--card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.timestamp__content {
+  width: 100%;
+  max-width: 900px;
+  box-sizing: border-box;
+  background: #f3f3f3;
+  border: 1px solid #191a23;
+  border-radius: 28px;
+  box-shadow: 0 6px 0 #191a23;
+  padding: 1.75rem 2rem;
+  text-align: left;
+}
+
+.timestamp__title {
+  margin: 0 0 1.25rem;
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+.timestamp__highlight {
+  display: inline-block;
+  background: #b9ff66;
+  color: #000000;
+  border-radius: 7px;
+  padding: 0 0.4rem;
+  font-weight: 600;
+}
+
+.timestamp__form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.timestamp__input {
+  flex: 1 1 320px;
+  min-width: 0;
+  padding: 0.9rem 1.25rem;
+  font-size: 1rem;
+  color: #000000;
+  background: #ffffff;
+  border: 1px solid #191a23;
+  border-radius: 14px;
+  outline: none;
+}
+
+.timestamp__input::placeholder {
+  color: #8d8d8d;
+}
+
+.timestamp__input:focus {
+  border-color: #000000;
+  box-shadow: 0 0 0 2px rgba(185, 255, 102, 0.6);
+}
+
+.timestamp__input--error {
+  border-color: #e03b3b;
+}
+
+.timestamp__input--error:focus {
+  box-shadow: 0 0 0 2px rgba(224, 59, 59, 0.3);
+}
+
+.timestamp__submit {
+  flex: 0 0 auto;
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #ffffff;
+  background: #191a23;
+  border: 1px solid #191a23;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.timestamp__submit:hover {
+  background: #b9ff66;
+  color: #000000;
+}
+
+.timestamp__error {
+  margin: 1rem 0 0;
+  color: #e03b3b;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 1024px) {
+  .timestamp {
+    padding: 0.75rem 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .timestamp {
+    padding: 0.75rem 1rem;
+  }
+
+  .timestamp__content {
+    padding: 1.5rem 1.25rem;
+    border-radius: 24px;
+  }
+
+  .timestamp__title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .timestamp__input {
+    flex: 1 1 100%;
+    font-size: 0.95rem;
+  }
+
+  .timestamp__submit {
+    flex: 1 1 100%;
+    padding: 0.85rem 2rem;
+  }
+}

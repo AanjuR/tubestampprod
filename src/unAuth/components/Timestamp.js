@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
+import { httpsCallable } from "firebase/functions";
+import { functions } from "../../firebase";
 import "./Timestamp.css";
 
 const API_KEY = import.meta.env.VITE_FIREBASE_YOUTUBE_API_KEY;
+
+const generateTimestampsFn = httpsCallable(functions, "generate_timestamps");
 
 const YOUTUBE_URL_REGEX =
   /^(https?:\/\/)?(www\.)?(m\.)?(youtube\.com\/(watch\?v=|shorts\/|live\/|embed\/)[\w-]{11}|youtu\.be\/[\w-]{11})(\S*)?$/;
@@ -35,6 +39,9 @@ function Timestamp() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [video, setVideo] = useState(null);
+  const [timestamps, setTimestamps] = useState([]);
+  const [tsLoading, setTsLoading] = useState(false);
+  const [tsError, setTsError] = useState("");
 
   const loadVideo = async (videoId, signal) => {
     setLoading(true);
@@ -100,6 +107,8 @@ function Timestamp() {
       setVideo(null);
       setError("");
       setLoading(false);
+      setTimestamps([]);
+      setTsError("");
       return;
     }
 
@@ -119,6 +128,30 @@ function Timestamp() {
       controller.abort();
     };
   }, [url]);
+
+  const generateTimestamps = async (videoId) => {
+    setTsLoading(true);
+    setTsError("");
+    setTimestamps([]);
+
+    try {
+      const result = await generateTimestampsFn({ videoId });
+      const data = result.data && result.data.timestamps;
+      if (Array.isArray(data) && data.length > 0) {
+        setTimestamps(data);
+      } else {
+        setTsError("No timestamps could be generated for this video.");
+      }
+    } catch (err) {
+      setTsError(
+        err && err.message
+          ? err.message
+          : "Something went wrong generating timestamps."
+      );
+    } finally {
+      setTsLoading(false);
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -142,6 +175,7 @@ function Timestamp() {
 
     setError("");
     loadVideo(videoId);
+    generateTimestamps(videoId);
   };
 
   return (
@@ -200,6 +234,37 @@ function Timestamp() {
                 <p className="timestamp__video-stats">{video.views} views</p>
               )}
             </div>
+          </div>
+        )}
+
+        {tsLoading && (
+          <p className="timestamp__status">Generating timestamps...</p>
+        )}
+
+        {tsError && !tsLoading && (
+          <p className="timestamp__error">{tsError}</p>
+        )}
+
+        {timestamps.length > 0 && !tsLoading && (
+          <div className="timestamp__chapters">
+            <h3 className="timestamp__chapters-title">Timestamps</h3>
+            <ul className="timestamp__list">
+              {timestamps.map((ts) => (
+                <li key={ts.time} className="timestamp__item">
+                  <a
+                    className="timestamp__jump"
+                    href={`https://www.youtube.com/watch?v=${video ? video.id : ""}&t=${ts.time}s`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span className="timestamp__time">
+                      {ts.display || ts.time}
+                    </span>
+                    <span className="timestamp__label">{ts.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>
